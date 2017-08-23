@@ -23,5 +23,3 @@ networks:
 volumes:
   wp-e2e-tests-data-volume:
     external: true
-command: sudo curl -L --fail https://github.com/docker/compose/releases/download/1.16.0/run.sh -o /usr/local/bin/docker-compose
-command: sudo chmod +x /usr/local/bin/docker-compose
