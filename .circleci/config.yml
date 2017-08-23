@@ -8,7 +8,7 @@ jobs:
         environment:
                 NODE_ENV: test
       - image: sitespeedio/sitespeed.io:5.4.0
-        command: --privileged --shm-size=1g --rm -v /wp-e2e-tests:sitespeed.io -c cable -b chrome --video --speedIndex https://www.wordpress.com
+        command: --privileged --shm-size=1g --rm -v $(pwd):/sitespeed.io -c cable -b chrome --video --speedIndex https://www.wordpress.com --budget.configPath sitespeed-budget.json
 
     steps:
       - checkout
