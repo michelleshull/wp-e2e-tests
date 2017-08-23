@@ -30,7 +30,11 @@ jobs:
       - setup_remote_docker
       - run:
           name: sitespeed.io tests
-          command: docker run --privileged --shm-size=1g --rm -v $(pwd):/sitespeed.io sitespeedio/sitespeed.io -c cable -b chrome --video --speedIndex https://www.wordpress.com
+          command: |
+            docker create -v /cfg --name configs alpine:3.4 /bin/true
+            docker cp /wp-e2e-tests/sitespeed-budget.json configs:/cfg
+            docker run --privileged --shm-size=1g -v $(pwd):/sitespeed.io sitespeedio/sitespeed.io:5.4.0 -c cable -b chrome --video --speedIndex https://www.wordpress.com --budget.configPath configs/sitespeed-budget.json
+            docker cp sitespeed.io:/sitespeed-result /wp-e2e-tests/sitespeed-result
       - store_test_results:
           path: reports/
       - store_artifacts:
