@@ -11,7 +11,7 @@ jobs:
       - checkout
       - restore_cache:
           key: << checksum "package.json" >>
-      - run: source $HOME/.nvm/nvm.sh && npm install && npm install -g sitespeed.io@5.5.0
+      - run: source $HOME/.nvm/nvm.sh && npm install 
       - save_cache:
           paths:
             - /wp-e2e-tests/node_modules
@@ -20,7 +20,8 @@ jobs:
       #- run: ./scripts/run-wrapper.sh
       - run:
           name: sitespeed.io tests
-          command: sitespeed.io  --budget.configPath ./sitespeed-budget.json -b chrome -n 3 -r ./sitespeed-result --suppressDomainFolder --outputFolderName test http://www.wordpress.com
+          command: source $HOME/.nvm/nvm.sh && npm install -g sitespeed.io@5.5.0
+          sitespeed.io  --budget.configPath ./sitespeed-budget.json -b chrome -n 3 -r ./sitespeed-result --suppressDomainFolder --outputFolderName test http://www.wordpress.com
       - store_test_results:
           path: reports/
       - store_artifacts:
