@@ -17,7 +17,7 @@ jobs:
             - /wp-e2e-tests/node_modules
           key: << checksum "package.json" >>
       - run: ./scripts/randomize.sh specs
-      - run: ./scripts/run-wrapper.sh
+      #- run: ./scripts/run-wrapper.sh
       - run:
           name: sitespeed.io tests
           command: docker run sitespeedio/sitespeed.io:5.4.0 --privileged --shm-size=1g --rm -v $(pwd):/sitespeed.io -c cable -b chrome --video --budget.configPath ./sitespeed-budget.json --speedIndex https://www.wordpress.com
