@@ -22,7 +22,7 @@ jobs:
       #- run: ./scripts/randomize.sh specs
       #- run: ./scripts/run-wrapper.sh
       - run:
-        command: sitespeedio -c cable -b chrome --video --speedIndex https://www.wordpress.com --budget.configPath sitespeed-budget.json
+          command: sitespeedio -c cable -b chrome --video --speedIndex https://www.wordpress.com --budget.configPath sitespeed-budget.json
       - store_test_results:
           path: reports/
       - store_artifacts:
