@@ -21,7 +21,7 @@ jobs:
           key: << checksum "package.json" >>
       #- run: ./scripts/randomize.sh specs
       #- run: ./scripts/run-wrapper.sh
-      -run:
+      - run:
         command: sitespeedio -c cable -b chrome --video --speedIndex https://www.wordpress.com --budget.configPath sitespeed-budget.json
       - store_test_results:
           path: reports/
@@ -29,5 +29,5 @@ jobs:
           path: reports/
       - store_artifacts:
           path: screenshots/
-       - store_artifacts:
+      - store_artifacts:
           path: sitespeed-result/
