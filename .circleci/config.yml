@@ -7,9 +7,6 @@ jobs:
       - image: automattic/wp-e2e-tests:0.0.5
         environment:
                 NODE_ENV: test
-      - image: sitespeedio/sitespeed.io:5.4.0
-        command: --privileged --shm-size=1g --rm -c cable -b chrome --video --speedIndex https://www.wordpress.com 
-
     steps:
       - checkout
       - restore_cache:
@@ -21,6 +18,9 @@ jobs:
           key: << checksum "package.json" >>
       - run: ./scripts/randomize.sh specs
       - run: ./scripts/run-wrapper.sh
+      - run:
+          name: sitespeed.io tests
+          command: docker run sitespeedio/sitespeed.io:5.4.0 --privileged --shm-size=1g --rm -v $(pwd):/sitespeed.io -c cable -b chrome --video --budget.configPath ./sitespeed-budget.json --speedIndex https://www.wordpress.com
       - store_test_results:
           path: reports/
       - store_artifacts:
