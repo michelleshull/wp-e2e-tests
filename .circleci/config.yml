@@ -17,7 +17,7 @@ jobs:
             - /wp-e2e-tests/node_modules
           key: << checksum "package.json" >>
       - run: ./scripts/randomize.sh specs
-      #- run: ./scripts/run-wrapper.sh
+      - run: ./scripts/run-wrapper.sh
       - run:
           name: Install Docker
           command: |
