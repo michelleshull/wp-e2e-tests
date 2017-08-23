@@ -33,7 +33,7 @@ jobs:
           command: |
             docker create -v /cfg --name configs alpine:3.4 /bin/true
             docker cp /wp-e2e-tests/sitespeed-budget.json configs:/cfg
-            docker run --name sitespeed.io --privileged --shm-size=1g --volume configs sitespeedio/sitespeed.io:5.4.0 -c cable -b chrome --video --speedIndex https://www.wordpress.com --budget.configPath sitespeed-budget.json
+            docker run --name sitespeed.io --privileged --shm-size=1g -v $configs:/sitespeed.io sitespeedio/sitespeed.io:5.4.0 -c cable -b chrome --video --speedIndex https://www.wordpress.com --budget.configPath sitespeed-budget.json
             docker cp sitespeed.io:/sitespeed-result /wp-e2e-tests/sitespeed-result
       - store_test_results:
           path: reports/
