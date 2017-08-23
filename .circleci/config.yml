@@ -20,8 +20,9 @@ jobs:
       #- run: ./scripts/run-wrapper.sh
       - run:
           name: sitespeed.io tests
-          command: source $HOME/.nvm/nvm.sh && npm install -g sitespeed.io@5.5.0
-          sitespeed.io  --budget.configPath ./sitespeed-budget.json -b chrome -n 3 -r ./sitespeed-result --suppressDomainFolder --outputFolderName test http://www.wordpress.com
+          command: |
+            source $HOME/.nvm/nvm.sh && npm install -g sitespeed.io@5.5.0
+            sitespeed.io  --budget.configPath ./sitespeed-budget.json -b chrome -n 3 -r ./sitespeed-result --suppressDomainFolder --outputFolderName test http://www.wordpress.com
       - store_test_results:
           path: reports/
       - store_artifacts:
