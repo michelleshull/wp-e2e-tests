@@ -19,10 +19,15 @@ jobs:
       - run: ./scripts/randomize.sh specs
       #- run: ./scripts/run-wrapper.sh
       - run:
-          name: sitespeed.io tests
+          name: Install Docker Compose
           command: |
-            source $HOME/.nvm/nvm.sh && npm install -g sitespeed.io@5.5.0
-            sitespeed.io  --budget.configPath ./sitespeed-budget.json -b chrome -n 3 -r ./sitespeed-result --suppressDomainFolder --outputFolderName test --browsertime.chrome.args no-sandbox http://www.wordpress.com
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
+      - setup_remote_docker
+      - run:
+          name: sitespeed.io tests
+          command: docker run --privileged --shm-size=1g --rm -v $(pwd):/sitespeed.io sitespeedio/sitespeed.io -c cable -b chrome --video --speedIndex https://www.wordpress.com
       - store_test_results:
           path: reports/
       - store_artifacts:
