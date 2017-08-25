@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  "e2e":
     parallelism: 2
     working_directory: /wp-e2e-tests
     docker:
@@ -18,6 +18,21 @@ jobs:
           key: << checksum "package.json" >>
       - run: ./scripts/randomize.sh specs
       - run: ./scripts/run-wrapper.sh
+      - store_test_results:
+          path: reports/
+      - store_artifacts:
+          path: reports/
+      - store_artifacts:
+          path: screenshots/
+
+  "sitespeed":
+    working_directory: /wp-e2e-tests/sitespeed
+    docker:
+      - image: automattic/wp-e2e-tests:0.0.5
+        environment:
+                NODE_ENV: test
+    steps:
+      - checkout
       - run:
           name: Install Docker
           command: |
@@ -32,14 +47,14 @@ jobs:
           name: sitespeed.io tests
           command: |
             docker create -v /cfg --name configs alpine:3.4 /bin/true
-            docker cp /wp-e2e-tests/sitespeed-budget.json configs:/cfg
+            docker cp /wp-e2e-tests/sitespeed/sitespeed-budget.json configs:/cfg
             docker run --name sitespeed.io --privileged --shm-size=1g --volumes-from configs -v /cfg:/sitespeed.io sitespeedio/sitespeed.io:5.4.0 -c cable -b chrome --video --speedIndex https://www.wordpress.com --budget.configPath /cfg/sitespeed-budget.json --outputFolder /cfg/sitespeed
-            docker cp sitespeed.io:/cfg/sitespeed /wp-e2e-tests/sitespeed-result
-      - store_test_results:
-          path: reports/
-      - store_artifacts:
-          path: reports/
-      - store_artifacts:
-          path: screenshots/
+            docker cp sitespeed.io:/cfg/sitespeed /wp-e2e-tests/sitespeed/sitespeed-result
       - store_artifacts:
           path: sitespeed-result/
+workflows:
+  version: 2
+  build:
+    jobs:
+      - "e2e"
+      - "sitespeed"
