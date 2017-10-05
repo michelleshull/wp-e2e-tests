@@ -4,6 +4,7 @@ import test from 'selenium-webdriver/testing';
 import config from 'config';
 import * as driverManager from '../lib/driver-manager.js';
 import * as dataHelper from '../lib/data-helper';
+import * as eyesHelper from '../lib/eyes-helper';
 
 import ReaderPage from '../lib/pages/reader-page';
 import ProfilePage from '../lib/pages/profile-page';
@@ -21,9 +22,15 @@ const host = dataHelper.getJetpackHost();
 
 var driver;
 
+let eyes = eyesHelper.eyesSetup( true );
+
 test.before( function() {
 	this.timeout( startBrowserTimeoutMS );
 	driver = driverManager.startBrowser();
+
+	let testEnvironment = 'WordPress.com';
+	let testName = `Log In and Out [${global.browserName}] [${screenSize}]`;
+	eyesHelper.eyesOpen( driver, eyes, testEnvironment, testName );
 } );
 
 test.describe( `[${host}] Authentication: (${screenSize}) @parallel @jetpack`, function() {
@@ -38,7 +45,7 @@ test.describe( `[${host}] Authentication: (${screenSize}) @parallel @jetpack`, f
 		test.describe( 'Can Log In', function() {
 			test.it( 'Can log in', function() {
 				let loginFlow = new LoginFlow( driver );
-				loginFlow.login();
+				loginFlow.login( eyes );
 			} );
 
 			test.it( 'Can see Reader Page after logging in', function() {
@@ -72,6 +79,7 @@ test.describe( `[${host}] Authentication: (${screenSize}) @parallel @jetpack`, f
 
 			test.it( 'Can logout from profile page', function() {
 				let profilePage = new ProfilePage( driver );
+				eyesHelper.eyesScreenshot( driver, eyes, 'Me Profile Page' );
 				profilePage.clickSignOut();
 			} );
 
@@ -95,8 +103,13 @@ test.describe( `[${host}] User Agent: (${screenSize}) @parallel @jetpack`, funct
 
 	test.it( 'Can see the correct user agent set', function() {
 		this.wpHomePage = new WPHomePage( driver, { visit: true } );
+		eyesHelper.eyesScreenshot( driver, eyes, 'Logged Out Homepage' );
 		driver.executeScript( 'return navigator.userAgent;' ).then( ( userAgent ) => {
 			assert( userAgent.match( 'wp-e2e-tests' ), `User Agent does not contain 'wp-e2e-tests'.  [${userAgent}]` );
 		} );
 	} );
+} );
+
+test.after( function() {
+	eyesHelper.eyesClose( eyes );
 } );
