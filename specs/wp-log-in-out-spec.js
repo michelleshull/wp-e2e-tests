@@ -33,7 +33,7 @@ test.before( function() {
 	eyesHelper.eyesOpen( driver, eyes, testEnvironment, testName );
 } );
 
-test.describe( `[${host}] Authentication: (${screenSize}) @parallel @jetpack`, function() {
+test.describe( `[${host}] Authentication: (${screenSize}) @parallel @jetpack @visdiff`, function() {
 	this.timeout( mochaTimeOut );
 	this.bailSuite( true );
 
@@ -93,7 +93,7 @@ test.describe( `[${host}] Authentication: (${screenSize}) @parallel @jetpack`, f
 	} );
 } );
 
-test.describe( `[${host}] User Agent: (${screenSize}) @parallel @jetpack`, function() {
+test.describe( `[${host}] User Agent: (${screenSize}) @parallel @jetpack @visdiff`, function() {
 	this.timeout( mochaTimeOut );
 	this.bailSuite( true );
 
