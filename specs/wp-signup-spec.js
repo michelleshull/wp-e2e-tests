@@ -57,6 +57,8 @@ testDescribe( `[${host}] Sign Up  (${screenSize}, ${locale})`, function() {
 		this.bailSuite( true );
 		let stepNum = 1;
 
+		console.log( "EXECUTING CANARY TESTS FROM CORRECT BRANCH!!!" );
+
 		const blogName = dataHelper.getNewBlogName();
 		let newBlogAddress = '';
 		const expectedBlogAddresses = dataHelper.getExpectedFreeAddresses( blogName );
