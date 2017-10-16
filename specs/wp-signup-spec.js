@@ -53,7 +53,7 @@ if ( process.env.DISABLE_EMAIL === 'true' ) {
 testDescribe( `[${host}] Sign Up  (${screenSize}, ${locale})`, function() {
 	this.timeout( mochaTimeOut );
 
-	test.describe( 'Sign up for a free site @parallel @canary', function() {
+	test.describe( 'Sign up for a free site @parallel', function() {
 		this.bailSuite( true );
 		let stepNum = 1;
 
