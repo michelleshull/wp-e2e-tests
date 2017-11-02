@@ -334,7 +334,7 @@ testDescribe( `[${host}] Sign Up  (${screenSize}, ${locale})`, function() {
 								return this.signupProcessingPage.waitToDisappear();
 							} );
 
-							test.it( 'Verify login screen not present', () => {
+							test.xit( 'Verify login screen not present', () => {
 								return driver.getCurrentUrl().then( ( url ) => {
 									if ( ! url.match( /checkout/ ) ) {
 										let baseURL = config.get( 'calypsoBaseURL' );
@@ -614,7 +614,7 @@ testDescribe( `[${host}] Sign Up  (${screenSize}, ${locale})`, function() {
 								return this.signupProcessingPage.waitToDisappear();
 							} );
 
-							test.it( 'Verify login screen not present', () => {
+							test.xit( 'Verify login screen not present', () => {
 								return driver.getCurrentUrl().then( ( url ) => {
 									if ( ! url.match( /checkout/ ) ) {
 										let baseURL = config.get( 'calypsoBaseURL' );
