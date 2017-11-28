@@ -34,6 +34,7 @@
     "mailosaur": "4.0.0",
     "mocha": "hoverduck/mocha#57b51e8",
     "node-slack-upload": "1.2.1",
+    "png-itxt": "1.3.0",
     "random-qoutes-generator": "0.0.1",
     "sanitize-filename": "1.6.0",
     "selenium-webdriver": "3.6.0",
