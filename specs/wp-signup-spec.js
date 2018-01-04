@@ -18,7 +18,6 @@ import SignupProcessingPage from '../lib/pages/signup/signup-processing-page.js'
 import CheckOutPage from '../lib/pages/signup/checkout-page';
 import CheckOutThankyouPage from '../lib/pages/signup/checkout-thankyou-page.js';
 import ViewBlogPage from '../lib/pages/signup/view-blog-page.js';
-// import EditorPage from '../lib/pages/editor-page.js';
 import LoginPage from '../lib/pages/login-page';
 import MagicLoginPage from '../lib/pages/magic-login-page';
 import ReaderPage from '../lib/pages/reader-page';
@@ -32,9 +31,9 @@ import CancelDomainPage from '../lib/pages/cancel-domain-page';
 
 import FindADomainComponent from '../lib/components/find-a-domain-component.js';
 import SecurePaymentComponent from '../lib/components/secure-payment-component.js';
-// import PostEditorToolbarComponent from '../lib/components/post-editor-toolbar-component.js';
 import NavBarComponent from '../lib/components/navbar-component';
 import SideBarComponent from '../lib/components/sidebar-component';
+import SignupStepComponent from '../lib/components/signup-step-component.js';
 
 import * as SlackNotifier from '../lib/slack-notifier';
 
@@ -295,6 +294,8 @@ testDescribe( `[${host}] Sign Up  (${screenSize}, ${locale})`, function() {
 
 				test.it( 'Can then see the domains page ', function() {
 					this.findADomainComponent = new FindADomainComponent( driver );
+					this.signupStepComponent = new SignupStepComponent( driver );
+					this.signupStepComponent.waitForSignupStepLoad();
 					return this.findADomainComponent.displayed().then( ( displayed ) => {
 						eyesHelper.eyesScreenshot( driver, eyes, 'Domains Page' );
 						return assert.equal( displayed, true, 'The choose a domain page is not displayed' );
@@ -346,6 +347,7 @@ testDescribe( `[${host}] Sign Up  (${screenSize}, ${locale})`, function() {
 							this.createYourAccountPage.displayed().then( ( displayed ) => {
 								assert.equal( displayed, true, 'The create account page is not displayed' );
 							} );
+							this.signupStepComponent.waitForSignupStepLoad();
 							eyesHelper.eyesScreenshot( driver, eyes, 'Create Account Page' );
 							return this.createYourAccountPage.enterAccountDetailsAndSubmit( emailAddress, blogName, password );
 						} );
